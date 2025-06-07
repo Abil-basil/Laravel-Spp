@@ -11,13 +11,16 @@
     <div class="container mt-5">
         <h3>Aplikasi Cek Stok</h3>
         <div class="alert alert-info">
-            selamat datang <b>{{ $name }}</b> di aplikasi cek stok
+            selamat datang <b>{{ $name }}</b> sebagai <b>{{ $role }}</b> di aplikasi cek stok
         </div>
 
+        <a href="/admin" class="btn btn-warning" >Data Produk</a>
+        <a href="/pelanggan" class="btn btn-warning" >Data Pelanggan</a>
+
         {{-- logout --}}
-        <form action="/logout" method="post">
+        <form action="/logout" method="post" style="display: inline">
             @csrf
-            <button type="submit" class="btn btn-warning">
+            <button type="submit" class="btn btn-danger">
                 Logout
             </button>
         </form>

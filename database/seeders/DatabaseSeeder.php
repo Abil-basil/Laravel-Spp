@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\pengguna;
+use App\Models\Pelanggan;
 use App\Models\produk;
 use Illuminate\Support\Str;
 use App\Models\User;
@@ -31,5 +31,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         produk::factory(10)->create();
+        Pelanggan::factory(15)->create();
     }
 }

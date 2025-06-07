@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\PelangganController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,3 +18,5 @@ Route::post('/logout', [LoginController::class, 'logout'] );
 
 Route::get('/daftar', [RegisterController::class, 'index'] )->middleware('guest');
 Route::post('/daftar', [RegisterController::class, 'store'] );
+
+Route::get('/pelanggan', [PelangganController::class, 'index'])->middleware('auth');

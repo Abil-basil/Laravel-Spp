@@ -23,14 +23,24 @@ class RegisterController extends Controller
             'username' => ['required', 'max:50', 'unique:users'],
             'email' => ['required', ':dns', 'unique:users'],
             'password' => ['required', 'min:5'],
-            'peran' => ['required', Rule::in('admin', 'petugas')]
+            'peran' => ['required', 'in:admin,petugas']
         ]);
+
+        // dd($validate);
 
         // enkrip password
         $validate['password'] = Hash::make($validate['password']);
 
-        // penambahan data
+        //penambahan data
         User::create($validate);
+
+        // penambahan data v2
+        // User::create([
+        //     'username' => $validate['username'],
+        //     'email' => $validate['email'],
+        //     'password' => Hash::make($validate['password']),
+        //     'peran' => $validate['peran']
+        // ]);
 
         // flash message versi panjang
         // $request->session()->flash('succes', 'registrasi berhasil!');
