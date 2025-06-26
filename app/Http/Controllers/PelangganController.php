@@ -12,9 +12,21 @@ class PelangganController extends Controller
     {
         $data = [
             'pelanggan' => Pelanggan::all(),
-            'user' => Auth::user()
+            'user' => Auth::user(),
+            'title' => 'List Pelanggan'
         ];
 
         return view('/pelanggan', $data);
+    }
+
+    public function detail (Pelanggan $pelanggan)
+    {
+        $data = [
+            'user' => Auth::user(),
+            'title' => 'History Transaksi Pelanggan Oleh ' . $pelanggan->NamaPelanggan,
+            'data' => $pelanggan->penjualan
+        ];
+
+        return view('/detail-kasir', $data);
     }
 }

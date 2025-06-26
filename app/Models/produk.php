@@ -10,7 +10,7 @@ class produk extends Model
     /** @use HasFactory<\Database\Factories\ProdukFactory> */
     use HasFactory;
 
-    protected $primaryKey = 'ProdukID';
+    // protected $primaryKey = 'ProdukID';
 
     protected $fillable = [
         'NamaProduk',

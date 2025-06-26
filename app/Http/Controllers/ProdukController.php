@@ -14,7 +14,8 @@ class ProdukController extends Controller
     {
         $data = [
             'produk' => produk::all(),
-            'user' => Auth::user()
+            'user' => Auth::user(),
+            'title' => 'List Produk'
         ];
         return view('admin', $data);
     }

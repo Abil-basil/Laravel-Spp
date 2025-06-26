@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 </head>
 <body>
     
@@ -15,7 +15,9 @@
         </div>
 
         <a href="/admin" class="btn btn-warning" >Data Produk</a>
+        <a href="/kasir" class="btn btn-warning" >Data Kasir</a>
         <a href="/pelanggan" class="btn btn-warning" >Data Pelanggan</a>
+        <a href="/penjualan" class="btn btn-warning" >Data Penjualan</a>
 
         {{-- logout --}}
         <form action="/logout" method="post" style="display: inline">
@@ -27,7 +29,7 @@
 
         <div class="card mt-2">
             <div class="card-body">
-                <h4>Selamat datang di aplikasi Cek Stok</h4>
+                <h4>{{ $title }}</h4>
                 <hr>
                 {{ $slot }}
             </div>

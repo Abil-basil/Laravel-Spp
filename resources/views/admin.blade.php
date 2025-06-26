@@ -1,6 +1,7 @@
 <x-layout-page>
     <x-slot:name>{{ $user->username }}</x-slot:name>
     <x-slot:role>{{ $user->peran }}</x-slot:role>
+    <x-slot:title>{{ $title }}</x-slot:title>
     <table class="table table-striped table-bordered">
         <tr class="fw-bold">
             <td>No</td>

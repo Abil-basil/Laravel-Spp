@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -24,7 +25,7 @@ class User extends Authenticatable
     //     'email',
     //     'password',
     // ];
-    protected $primaryKey = 'UserID';
+    // protected $primaryKey = 'UserID';
     
     // apa saja yang tidak boleh di ubah
     protected $guarded = ['id'];
@@ -51,5 +52,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // protected $with = ['penjualan'];
+
+    public function penjualan (): HasMany
+    {
+        return $this->hasMany(penjualan::class, 'UserID');
     }
 }

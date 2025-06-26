@@ -9,11 +9,13 @@ use App\Models\User;
 
 class RegisterController extends Controller
 {
+    // untuk menampilkan semua data 
     public function index()
     {
         return view('daftar', ['keterangan' => 'registrasi']);
     }
 
+    // untuk registrasi
     public function store(Request $request)
     {
         // dd($request->all());
@@ -29,18 +31,19 @@ class RegisterController extends Controller
         // dd($validate);
 
         // enkrip password
-        $validate['password'] = Hash::make($validate['password']);
+        // $validate['password'] = Hash::make($validate['password']);
 
-        //penambahan data
-        User::create($validate);
+        //penambahan data otomatis
+        // User::create($validate);
 
-        // penambahan data v2
-        // User::create([
-        //     'username' => $validate['username'],
-        //     'email' => $validate['email'],
-        //     'password' => Hash::make($validate['password']),
-        //     'peran' => $validate['peran']
-        // ]);
+        // penambahan data manual
+        // ini jika ada yang tidak sesuai dengan apa yang di inputkan dengan data di database
+        User::create([
+            'username' => $validate['username'],
+            'email' => $validate['email'],
+            'password' => Hash::make($validate['password']),
+            'peran' => $validate['peran']
+        ]);
 
         // flash message versi panjang
         // $request->session()->flash('succes', 'registrasi berhasil!');

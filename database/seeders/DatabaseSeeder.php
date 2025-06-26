@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Pelanggan;
 use App\Models\produk;
+use App\Models\penjualan;
 use Illuminate\Support\Str;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         
 
-        User::factory(4)->create();
+        // User::factory(4)->create();
         
         User::create([
             'username' => 'ahay',
@@ -31,6 +32,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         produk::factory(10)->create();
-        Pelanggan::factory(15)->create();
+        // Pelanggan::factory(15)->create();
+
+        penjualan::factory(20)->recycle(
+            Pelanggan::factory(10)->create()
+        )->recycle(
+            User::factory(4)->create()
+        )->create();
+
     }
 }

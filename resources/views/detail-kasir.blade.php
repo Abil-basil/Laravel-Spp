@@ -1,21 +1,25 @@
 <x-layout-page>
+    {{-- @dd($data) --}}
     <x-slot:name>{{ $user->username }}</x-slot:name>
     <x-slot:role>{{ $user->peran }}</x-slot:role>
     <x-slot:title>{{ $title }}</x-slot:title>
     <table class="table table-striped table-bordered">
         <tr class="fw-bold">
             <td>No</td>
-            <td>Nama Pelanggan</td>
-            <td>Alamat</td>
-            <td>No Telepon</td>
+            <td>Tanggal Penjualan</td>
+            <td>Total Harga</td>
+            <td>Nama Kasir</td>
+            <td>Nama Pembeli</td>
         </tr>
 
-        @forelse ($pelanggan as $item)
+        @forelse ($data as $penjualan)
+        {{-- @dd($penjualan) --}}
             <tr>
                 <td>{{ $loop->iteration }}</td> {{-- auto increment --}} 
-                <td>{{ $item->NamaPelanggan }}</td>
-                <td>{{ $item->Alamat }}</td>
-                <td>{{ $item->NoTelp }}</td>
+                <td>{{ $penjualan->TanggalPenjualan }}</td>
+                <td>{{ $penjualan->TotalHarga }}</td>
+                <td>{{ $penjualan->pengguna->username }}</td>
+                <td>{{ $penjualan->pelanggan->NamaPelanggan }}</td>
             </tr>
         @empty
             <tr>
