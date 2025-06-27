@@ -20,15 +20,15 @@ class User extends Authenticatable
      */
 
     //  apa saja yang boleh di ubah
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
     // protected $primaryKey = 'UserID';
     
     // apa saja yang tidak boleh di ubah
-    protected $guarded = ['id'];
+    // protected $guarded = ['id'];
 
 
     /**

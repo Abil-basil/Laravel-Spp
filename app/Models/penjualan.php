@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class penjualan extends Model
 {
@@ -13,8 +14,9 @@ class penjualan extends Model
 
     // protected $primaryKey = 'PenjualanID';
 
-    protected $guarded = [
-        'PenjualanID',
+    protected $fillable = [
+        'TanggalPenjualan',
+        'TotalHarga',
         'PelangganID',
         'UserID'
     ];
@@ -29,5 +31,10 @@ class penjualan extends Model
     public function pelanggan(): BelongsTo
     {
         return $this->belongsTo(Pelanggan::class, 'PelangganID'); //nama fk
+    }
+
+    public function detail () : HasMany
+    {
+        return $this->hasMany(DetailPenjualan::class, 'PenjualanID');
     }
 }

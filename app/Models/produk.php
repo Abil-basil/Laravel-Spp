@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class produk extends Model
 {
@@ -17,4 +18,9 @@ class produk extends Model
         'Harga',
         'Stok'
     ];
+
+    public function detail(): HasMany
+    {
+        return $this->hasMany(DetailPenjualan::class, 'ProdukID');
+    }
 }

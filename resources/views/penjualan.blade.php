@@ -9,6 +9,7 @@
             <td>Total Harga</td>
             <td>Nama Kasir</td>
             <td>Nama Pembeli</td>
+            <td>Detail Penjualan</td>
         </tr>
 
         @forelse ($penjualans as $penjualan)
@@ -21,6 +22,9 @@
                 </td>
                 <td>
                     <a href="/detail-pelanggan/{{ $penjualan->PelangganID }}" class="btn btn-link text-decoration-none">{{ $penjualan->pelanggan->NamaPelanggan }}</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-info">cek</a>
                 </td>
             </tr>
         @empty
