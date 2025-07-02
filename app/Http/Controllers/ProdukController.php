@@ -19,4 +19,5 @@ class ProdukController extends Controller
         ];
         return view('admin', $data);
     }
+
 }

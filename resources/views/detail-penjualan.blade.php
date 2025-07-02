@@ -1,4 +1,5 @@
 <x-layout-page>
+    {{-- @dd($isi) --}}
     <x-slot:name>{{ $user->username }}</x-slot:name>
     <x-slot:role>{{ $user->peran }}</x-slot:role>
     <x-slot:title>{{ $title }}</x-slot:title>
@@ -6,22 +7,26 @@
         <tr class="fw-bold">
             <td>No</td>
             <td>Tanggal Penjualan</td>
-            <td>Total Harga</td>
-            <td>Nama Kasir</td>
-            <td>Nama Pembeli</td>
+            <td>Nama Produk</td>
+            <td>Jumlah Produk</td>
+            <td>Subtotal</td>
         </tr>
 
-        @forelse ($penjualans as $penjualan)
+        @forelse ($isi as $dt)
             <tr>
                 <td>{{ $loop->iteration }}</td> {{-- auto increment --}} 
-                <td>{{ $penjualan->TanggalPenjualan }}</td>
-                <td>{{ $penjualan->TotalHarga }}</td>
                 <td>
-                    <a href="/detail-kasir/{{ $penjualan->UserID }}" class="btn btn-link text-decoration-none">{{ $penjualan->pengguna->username }}</a>
+                    <a href="/detail-penjualan/{{ $dt->PenjualanID }}" class="text-decoration-none">
+                        {{ $dt->penjualan->TanggalPenjualan }}
+                    </a>
                 </td>
                 <td>
-                    <a href="/detail-pelanggan/{{ $penjualan->PelangganID }}" class="btn btn-link text-decoration-none">{{ $penjualan->pelanggan->NamaPelanggan }}</a>
+                    <a href="/detail-produk/{{ $dt->ProdukID }}" class="text-decoration-none">
+                        {{ $dt->produk->NamaProduk }}
+                    </a>
                 </td>
+                <td>{{ $dt->JumlahProduk }}</td>
+                <td>{{ $dt->Subtotal }}</td>
             </tr>
         @empty
             <tr>

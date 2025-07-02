@@ -22,12 +22,15 @@ Route::get('/daftar', [RegisterController::class, 'index'] )->middleware('guest'
 Route::post('/daftar', [RegisterController::class, 'store'] );
 
 Route::get('/penjualan', [PenjualanController::class, 'index'])->middleware('auth');
+Route::get('/detail-penjualan', [PenjualanController::class, 'detail'])->middleware('auth');
+Route::get('/detail-produk/{produk}', [PenjualanController::class, 'produk'])->middleware('auth');
+Route::get('/detail-penjualan/{penjualan}', [PenjualanController::class, 'penjualan'])->middleware('auth');
 
 Route::get('/pelanggan', [PelangganController::class, 'index'])->middleware('auth');
 Route::get('/detail-pelanggan/{pelanggan:id}', [PelangganController::class, 'detail'])->middleware('auth');
 
 Route::get('/kasir', [KasirController::class, 'index'])->middleware('auth');
-Route::get('/detail-kasir/{user:id}', [KasirController::class, 'detail'])->middleware('auth');
+Route::get('/detail-kasir/{user:email}', [KasirController::class, 'detail'])->middleware('auth');
 
 
 

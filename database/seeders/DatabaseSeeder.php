@@ -32,26 +32,42 @@ class DatabaseSeeder extends Seeder
         //         'Peran' => 'admin',
         //         'remember_token' => Str::random(10),
         //     ])
-        // )->create();
+        //   )->create();
+            
+            // User::factory(4)->create();
+            // User::create([
+            //     'username' => 'ahay',
+            //     'email' => 'admin@gmail.com',
+            //     'email_verified_at' => now(),
+            //     'password' => bcrypt('admin'),
+            //     'Peran' => 'admin',
+            //     'remember_token' => Str::random(10),
+            // ]);
+            // Pelanggan::factory(10)->create();
+            // penjualan::factory(15)->create();
+            // produk::factory(10)->create();
+            // DetailPenjualan::factory(20)->create();
+        
+            
 
-        // produk::factory(15)->create();
+        produk::factory(10)->create();
 
-        // penjualan::factory(20)->recycle([
-        //     Pelanggan::factory(10)->create(),
-        //     User::factory(4)->recycle(
-        //         User::create([
-        //             'username' => 'ahay',
-        //             'email' => 'admin@gmail.com',
-        //             'email_verified_at' => now(),
-        //             'password' => bcrypt('admin'),
-        //             'Peran' => 'admin',
-        //             'remember_token' => Str::random(10),
-        //         ])
-        //     )->create(),
-        // ])->create();
+        penjualan::factory(10)->recycle([
+            Pelanggan::factory(5)->create(),
+            User::factory(4)->recycle(
+                User::create([
+                    'username' => 'ahay',
+                    'email' => 'admin@gmail.com',
+                    'email_verified_at' => now(),
+                    'password' => bcrypt('admin'),
+                    'Peran' => 'admin',
+                    'remember_token' => Str::random(10),
+                ])
+            )->create(),
+        ])->create();
 
+        DetailPenjualan::factory(25)->create();
 
-        // DetailPenjualan::factory(30)->create();
 
         // DetailPenjualan::factory(20)->recycle([
         //     penjualan::factory(10)->create(),
@@ -59,26 +75,26 @@ class DatabaseSeeder extends Seeder
         // ])->create();
         
 
-        DetailPenjualan::factory(20)->recycle(
-            [
-                penjualan::factory(15)->recycle(
-                    [
-                        Pelanggan::factory(15)->create(),
-                        User::factory(4)->recycle(
-                            User::create([
-                                'username' => 'ahay',
-                                'email' => 'admin@gmail.com',
-                                'email_verified_at' => now(),
-                                'password' => bcrypt('admin'),
-                                'Peran' => 'admin',
-                                'remember_token' => Str::random(10),
-                            ])
-                        )->create(),
-                    ]
-                )->create(),
-                produk::factory(10)->create()
-            ]
-        )->create();
+        // DetailPenjualan::factory(20)->recycle(
+        //     [
+        //         penjualan::factory(15)->recycle(
+        //             [
+        //                 Pelanggan::factory(15)->create(),
+        //                 User::factory(4)->recycle(
+        //                     User::create([
+        //                         'username' => 'ahay',
+        //                         'email' => 'admin@gmail.com',
+        //                         'email_verified_at' => now(),
+        //                         'password' => bcrypt('admin'),
+        //                         'Peran' => 'admin',
+        //                         'remember_token' => Str::random(10),
+        //                     ])
+        //                 )->create(),
+        //             ]
+        //         )->create(),
+        //         produk::factory(10)->create()
+        //     ]
+        // )->create();
 
         // produk::factory(10)->create();
         // Pelanggan::factory(15)->create();

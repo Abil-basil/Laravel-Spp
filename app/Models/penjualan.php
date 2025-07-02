@@ -21,7 +21,7 @@ class penjualan extends Model
         'UserID'
     ];
 
-    protected $with = ['pengguna', 'pelanggan'];
+    protected $with = ['pengguna', 'pelanggan', 'detail'];
 
     public function pengguna (): BelongsTo
     {

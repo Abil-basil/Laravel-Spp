@@ -18,6 +18,7 @@
         <a href="/kasir" class="btn btn-warning" >Data Kasir</a>
         <a href="/pelanggan" class="btn btn-warning" >Data Pelanggan</a>
         <a href="/penjualan" class="btn btn-warning" >Data Penjualan</a>
+        <a href="/detail-penjualan" class="btn btn-warning" >Detail Penjualan</a>
 
         {{-- logout --}}
         <form action="/logout" method="post" style="display: inline">
