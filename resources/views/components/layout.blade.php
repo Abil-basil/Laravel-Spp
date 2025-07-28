@@ -14,8 +14,8 @@
             selamat datang <b>ahay</b> sebagai <b>admin</b>
         </div>
 
-        <a href="" class="btn btn-warning">pengguna</a>
-        <a href="" class="btn btn-warning">pelanggan</a>
+        <a href="/pengguna" class="btn btn-warning">pengguna</a>
+        <a href="/pelanggan" class="btn btn-warning">pelanggan</a>
         <a href="" class="btn btn-warning">produk</a>
         <a href="" class="btn btn-warning">penjualan</a>
         <a href="" class="btn btn-warning">detail penjualan</a>

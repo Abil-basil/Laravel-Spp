@@ -9,4 +9,11 @@ class Pengguna extends Model
 {
     /** @use HasFactory<\Database\Factories\PenggunaFactory> */
     use HasFactory;
+
+    public $fillable = [
+        'Username',
+        'Password',
+        'Email',
+        'Peran'
+    ];
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\PelangganController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,3 +9,5 @@ Route::get('/', function () {
 });
 
 Route::get('/pengguna', [PenggunaController::class, 'index']);
+
+Route::get('/pelanggan', [PelangganController::class, 'index']);

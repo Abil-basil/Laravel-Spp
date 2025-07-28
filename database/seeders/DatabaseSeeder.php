@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pelanggan;
 use App\Models\Pengguna;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,7 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Pengguna::factory(10)->create();
+        Pengguna::factory(5)->create();
+        Pelanggan::factory(10)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',
