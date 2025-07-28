@@ -18,7 +18,9 @@
                 <td>{{ $isi->Peran }}</td>
             </tr>
         @empty
-            
+            <tr>
+                <td colspan="4" class="text-center">Data Tidak Ada</td>
+            </tr>
         @endforelse
     </table>
 </x-layout>
