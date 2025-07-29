@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Pelanggan;
 use App\Models\Pengguna;
+use App\Models\Penjualan;
 use App\Models\Produk;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,9 +17,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Pengguna::factory(5)->create();
-        Pelanggan::factory(10)->create();
         Produk::factory(15)->create();
+
+        Penjualan::factory(20)->recycle([
+            Pelanggan::factory(10)->create(),
+            Pengguna::factory(4)->recycle(
+                Pengguna::create([
+                    'Username' => 'Ahay',
+                    'Password' => bcrypt('ahay'),
+                    'Email' => 'Ahay@gmail.com',
+                    'Peran' => 'Admin',
+                ])
+            )->create()
+        ])->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',

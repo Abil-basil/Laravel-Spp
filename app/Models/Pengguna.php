@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pengguna extends Model
 {
@@ -16,4 +17,9 @@ class Pengguna extends Model
         'Email',
         'Peran'
     ];
+
+    public function penjualan() : HasMany
+    {
+        return $this->hasMany(Penjualan::class, 'PenggunaID');
+    }
 }

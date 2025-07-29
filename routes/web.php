@@ -3,6 +3,7 @@
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PenjualanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,3 +15,5 @@ Route::get('/pengguna', [PenggunaController::class, 'index']);
 Route::get('/pelanggan', [PelangganController::class, 'index']);
 
 Route::get('/produk', [ProdukController::class, 'index']);
+
+Route::get('/penjualan', [PenjualanController::class, 'index']);
