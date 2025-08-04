@@ -11,4 +11,9 @@ class PelangganController extends Controller
     {
         return view('/pelanggan', ['title' => 'pelanggan', 'data' => Pelanggan::all()]);
     }
+
+    public function create()
+    {
+        return view('/tambah-pelanggan', ['title' => 'pelanggan']);
+    }
 }

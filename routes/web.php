@@ -11,10 +11,13 @@ Route::get('/', function () {
 });
 
 Route::get('/pengguna', [PenggunaController::class, 'index']);
+Route::get('/tambah-pengguna', [PenggunaController::class, 'create']);
 
 Route::get('/pelanggan', [PelangganController::class, 'index']);
+Route::get('/tambah-pelanggan', [PelangganController::class, 'create']);
 
 Route::get('/produk', [ProdukController::class, 'index']);
+Route::get('/tambah-produk', [ProdukController::class, 'create']);
 Route::get('/detail-produk/{produk}', [ProdukController::class, 'detailproduk']);
 
 Route::get('/penjualan', [PenjualanController::class, 'index']);

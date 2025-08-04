@@ -21,4 +21,9 @@ class ProdukController extends Controller
 
         return view('detail-penjulan', $data);
     }
+
+    public function create()
+    {
+        return view('/tambah-produk', ['title' => 'produk']);
+    }
 }

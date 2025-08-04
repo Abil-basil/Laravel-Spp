@@ -1,6 +1,7 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
+    <a href="tambah-pelanggan" class="btn btn-warning">Tambah Pelanggan</a>
     <table class="mt-3 table table-striped table-bordered">
         <tr class="fw-bold text-center">
             <td>No</td>

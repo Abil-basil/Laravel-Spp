@@ -1,6 +1,7 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
+    <a href="tambah-produk" class="btn btn-warning">Tambah Produk</a>
     <table class="mt-3 table table-striped table-bordered">
         <tr class="fw-bold text-center">
             <td>No</td>
@@ -11,9 +12,7 @@
         @forelse ($data as $isi)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>
-                    <a href="detail-produk/{{ $isi->id }}" class="text-decoration-none">{{ $isi->NamaProduk }}</a>
-                </td>
+                <td>{{ $isi->NamaProduk }}</td>
                 <td>{{ $isi->Harga }}</td>
                 <td>{{ $isi->Stok }}</td>
             </tr>

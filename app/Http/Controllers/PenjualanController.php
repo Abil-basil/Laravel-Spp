@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Penjualan;
 use Mpdf\Mpdf;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 
 class PenjualanController extends Controller
@@ -29,5 +30,11 @@ class PenjualanController extends Controller
         // $pdf = new mpdf();
         // $pdf->WriteHTML('<h1>hello world</h1>');
         // $pdf->OutPut();
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view('/penjualan-pdf', ['title' => 'penjualan', 'data' => Penjualan::all()]));
+        $dompdf->render();
+        $dompdf->stream('penjualan.pdf', array('Attachment' => false));
+
     }
 }
