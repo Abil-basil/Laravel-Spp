@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DetailPenjualan;
 use App\Models\Pelanggan;
 use App\Models\Pengguna;
 use App\Models\Penjualan;
@@ -17,10 +18,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Produk::factory(15)->create();
+        Produk::factory(5)->create();
 
-        Penjualan::factory(20)->recycle([
-            Pelanggan::factory(10)->create(),
+        Penjualan::factory(10)->recycle([
+            Pelanggan::factory(5)->create(),
             Pengguna::factory(4)->recycle(
                 Pengguna::create([
                     'Username' => 'Ahay',
@@ -30,6 +31,8 @@ class DatabaseSeeder extends Seeder
                 ])
             )->create()
         ])->create();
+
+        DetailPenjualan::factory(20)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',
