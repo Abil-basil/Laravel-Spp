@@ -16,7 +16,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $isi->TanggalPenjualan }}</td>
                 <td>{{ $isi->TotalHarga }}</td>
-                <td>{{ $isi->Pengguna->Username }}</td>
+                <td>{{ $isi->Pengguna->name }}</td>
                 <td>{{ $isi->Pelanggan->NamaPelanggan }}</td>
                 <td>
                     <a href="/detail-penjualan/{{ $isi->id }}" class="btn btn-warning">Detail</a>

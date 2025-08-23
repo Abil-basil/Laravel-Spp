@@ -26,7 +26,7 @@ class Penjualan extends Model
 
     public function Pengguna(): BelongsTo
     {
-        return $this->belongsTo(Pengguna::class, 'PenggunaID');
+        return $this->belongsTo(User::class, 'PenggunaID');
     }
 
     public function DetailPenjualan(): HasMany

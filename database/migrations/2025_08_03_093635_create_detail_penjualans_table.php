@@ -16,11 +16,11 @@ return new class extends Migration
             $table->foreignId('PenjualanID')->constrained(
                 table: 'penjualans',
                 indexName: 'penjulan_id'
-            );
+            )->onDelete('cascade');
             $table->foreignId('ProdukID')->constrained(
                 table: 'produks',
                 indexName: 'produk_id'
-            );
+            )->onDelete('cascade');
             $table->integer('JumlahProduk');
             $table->decimal('Subtotal');
             $table->timestamps();

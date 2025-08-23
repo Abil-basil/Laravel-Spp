@@ -16,13 +16,13 @@ return new class extends Migration
             $table->string('TanggalPenjualan');
             $table->decimal('TotalHarga');
             $table->foreignId('PenggunaID')->constrained(
-                table: 'penggunas',
+                table: 'users',
                 indexName: 'penjualan_pengguna_id'
-            );
+            )->onDelete('cascade');
             $table->foreignId('PelangganID')->constrained(
                 table: 'pelanggans',
                 indexName: 'penjualan_pelanggan_id'
-            );
+            )->onDelete('cascade');
             $table->timestamps();
         });
     }

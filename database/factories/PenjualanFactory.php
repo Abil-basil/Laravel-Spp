@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Pelanggan;
-use App\Models\Pengguna;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +21,7 @@ class PenjualanFactory extends Factory
         return [
             'TanggalPenjualan' => fake()->dateTimeBetween('-1 months', 'now'),
             'TotalHarga' => fake()->numberBetween(200000, 300000),
-            'PenggunaID' => Pengguna::factory(),
+            'PenggunaID' => User::factory(),
             'PelangganID' => Pelanggan::factory()
         ];
     }

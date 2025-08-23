@@ -18,21 +18,47 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Produk::factory(5)->create();
+        User::create([
+            'name' => 'ahay',
+            'email' => 'ahay@gmail.com',
+            'password' => bcrypt('ahay'),
+            'email_verified_at' => now(),
+            'peran' => 'admin'
+        ]);
 
-        Penjualan::factory(10)->recycle([
-            Pelanggan::factory(5)->create(),
-            Pengguna::factory(4)->recycle(
-                Pengguna::create([
-                    'Username' => 'Ahay',
-                    'Password' => bcrypt('ahay'),
-                    'Email' => 'Ahay@gmail.com',
-                    'Peran' => 'Admin',
-                ])
-            )->create()
-        ])->create();
+        Pelanggan::create([
+            'NamaPelanggan' => 'bagogo',
+            'Alamat' => 'sukabumi',
+            'NoTelp' => '078624314251'
+        ]);
 
-        DetailPenjualan::factory(20)->create();
+        Produk::create([
+            'NamaProduk' => 'teh gelas',
+            'Harga' => 2000,
+            'Stok' => 100
+        ]);
+
+        Penjualan::create([
+            'TanggalPenjualan' => now(),
+            'TotalHarga' => 20000,
+            'PenggunaID' => 1,
+            'PelangganID' => 1
+        ]);
+
+        DetailPenjualan::create([
+            'PenjualanID' => 1,
+            'ProdukID' => 1,
+            'JumlahProduk' => 10,
+            'Subtotal' => 20000
+        ]);
+
+        // Penjualan::factory(10)->recycle(Pelanggan::factory(5)->create())->create();
+
+        // Penjualan::factory(10)->recycle([
+        //     Pelanggan::factory(5)->create()
+        // ])->create();
+
+        // DetailPenjualan::factory(20)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',

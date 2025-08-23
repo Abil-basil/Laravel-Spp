@@ -18,7 +18,10 @@
         <a href="/pelanggan" class="btn btn-warning">pelanggan</a>
         <a href="/produk" class="btn btn-warning">produk</a>
         <a href="/penjualan" class="btn btn-warning">penjualan</a>
-        <a href="#" class="btn btn-danger">logout</a>
+        <form action="/logout" method="POST" style="display: inline">
+            @csrf
+            <button type="submit" class="btn btn-danger">logout</button>
+        </form>
         @if (request()->is('penjualan'))
             <a href="penjualan/download-pdf" class="btn btn-info mb-2 mt-2">Download pdf</a>
         @endif

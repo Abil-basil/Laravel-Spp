@@ -27,10 +27,6 @@ class PenjualanController extends Controller
 
     public function pdf()
     {
-        // $pdf = new mpdf();
-        // $pdf->WriteHTML('<h1>hello world</h1>');
-        // $pdf->OutPut();
-
         $dompdf = new Dompdf();
         $dompdf->loadHtml(view('/penjualan-pdf', ['title' => 'penjualan', 'data' => Penjualan::all()]));
         $dompdf->render();
