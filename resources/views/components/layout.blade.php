@@ -22,6 +22,7 @@
             @csrf
             <button type="submit" class="btn btn-danger">logout</button>
         </form>
+
         @if (request()->is('penjualan'))
             <a href="penjualan/download-pdf" class="btn btn-info mb-2 mt-2">Download pdf</a>
         @endif

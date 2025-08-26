@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 
 class PenggunaController extends Controller
 {
-    public $title = 'pengguna';
-
     public function index()
     {
         return view('/pengguna', ['title' => 'pengguna', 'data' => User::all()]);
@@ -22,24 +20,47 @@ class PenggunaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Username' => ['required'],
-            'Password' => ['required', 'min:5'],
-            'Email' => ['required', 'email'],
-            'Peran' => ['required']
+            'name' => ['required'],
+            'password' => ['required', 'min:5'],
+            'email' => ['required', 'email'],
+            'peran' => ['required']
         ]);
 
         // dd($request->Peran);
 
         // error default peran admin
         User::create([
-            'name' => $request->Username,
-            'email' => $request->Email,
-            'email_verified_at' => now(),
-            'password' => bcrypt($request->Password),
-            'peran' => $request->Peran,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'peran' => $request->peran
         ]);
 
         return redirect('pengguna')->with('notif', 'tambah pengguna berhasil');
+    }
+
+    public function edit(User $user)
+    {
+        return view('edit-pengguna', ['title' => 'Edit Pengguna', 'data' => $user]);
+    }
+
+    public function update($id, Request $request)
+    {
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+            'peran' => ['required']
+        ]);
+
+        User::WHERE('id', $id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'peran' => $request->peran
+        ]);
+
+        return redirect('pengguna')->with('notif', 'Edit Pengguna Berhasil');
     }
 
     public function delete(User $user)

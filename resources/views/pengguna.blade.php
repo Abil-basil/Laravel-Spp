@@ -19,18 +19,21 @@
             <td>Aksi</td>
         </tr>
         @forelse ($data as $isi)
-            <tr>
+            <tr class="text-center">
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $isi->name }}</td>
                 <td class="text-center"> ******* </td>
                 <td>{{ $isi->email }}</td>
                 <td>{{ $isi->peran }}</td>
                 <td>
-                    <form action="/pengguna/{{ $isi->id }}/hapus" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('yakin ingin menghapus pengguna {{ $isi->name }}')">Hapus</button>
-                    </form>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="/edit-pengguna/{{ $isi->id }}" class="btn btn-info">Edit</a> 
+                        <form action="/pengguna/{{ $isi->id }}/hapus" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('yakin ingin menghapus pengguna {{ $isi->name }}')">Hapus</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         @empty
