@@ -46,9 +46,30 @@ class ProdukController extends Controller
         return redirect('produk')->with('notif', 'Menambahkan Produk Berhasil');
     }
 
-    public function delete(Request $request)
+    public function edit(Produk $produk){
+        return view('edit-produk', ['title' => 'edit produk', 'data' => $produk]);    
+    }
+
+    public function update($id, Request $request)
     {
-        Produk::where('id', $request->id)->delete();
+        $request->validate([
+            'NamaProduk' => ['required'],
+            'Harga' => ['required'],
+            'Stok' => ['required']
+        ]);
+
+        Produk::WHERE('id', $id)->update([
+            'NamaProduk' => $request->NamaProduk,
+            'Harga' => $request->Harga,
+            'Stok' => $request->Stok
+        ]);
+
+        return redirect('produk')->with('notif', 'edit produk berhasil');
+    }
+
+    public function delete(Produk $produk)
+    {
+        Produk::where('id', $produk->id)->delete();
 
         return redirect('produk')->with('notif', 'Hapus Produk Berhasil');
     }

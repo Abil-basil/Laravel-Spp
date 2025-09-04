@@ -31,10 +31,10 @@ Route::delete('/pelanggan/{pelanggan}/hapus', [PelangganController::class, 'dele
 
 Route::get('/produk', [ProdukController::class, 'index'])->middleware('auth');
 Route::get('/tambah-produk', [ProdukController::class, 'create'])->middleware('auth');
-// belum beres
 Route::get('edit-produk/{produk}', [ProdukController::class, 'edit'])->middleware('auth');
 Route::get('/detail-produk/{produk}', [ProdukController::class, 'detailproduk'])->middleware('auth');
 Route::post('/produk', [ProdukController::class, 'store']);
+Route::put('/produk/{produk}', [ProdukController::class, 'update']);
 Route::delete('/produk/{produk}/hapus', [ProdukController::class, 'delete']);
 
 Route::get('/penjualan', [PenjualanController::class, 'index'])->middleware('auth');
