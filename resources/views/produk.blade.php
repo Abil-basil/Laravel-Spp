@@ -22,20 +22,26 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $isi->NamaProduk }}</td>
                 <td>{{ $isi->Harga }}</td>
-                <td>{{ $isi->Stok }}</td>
+                <td>{{ $isi->Stok }}
+                    {{-- @if ($isi->Stok == 0)
+                        <b>stok habis</b>
+                    @else
+                        {{ $isi->Stok }}
+                    @endif --}}
+                </td>
                 <td>
                     <div class="d-flex justify-content-center gap-2">
                         <a href="/edit-produk/{{ $isi->id }}" class="btn btn-info">Edit</a>
                         <form action="/produk/{{ $isi->id }}/hapus" method="POST">
                             @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Yakin Ingin Menghapus Produk {{ $isi->NamaProduk }}')">Hapus</button>
+                            <button type="submit" class="btn btn-danger delete-warning">Hapus</button>
                         </form>
                     </div>
                 </td>
             </tr>
         @empty
             <tr>
-                <td colspan="4" class="text-center">Data Tidak Ada</td>
+                <td colspan="5" class="text-center">Data Tidak Ada</td>
             </tr>
         @endforelse
     </table>

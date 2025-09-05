@@ -31,7 +31,7 @@
                         <form action="/pengguna/{{ $isi->id }}/hapus" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('yakin ingin menghapus pengguna {{ $isi->name }}')">Hapus</button>
+                            <button type="submit" class="btn btn-danger delete-warning">Hapus</button>
                         </form>
                     </div>
                 </td>

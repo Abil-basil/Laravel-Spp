@@ -14,7 +14,7 @@
                         <p><strong>Total Harga:</strong> {{ number_format($penjualan->TotalHarga, 0, ',', '.') }}</p>
                     </div>
                     <div class="col-md-6">
-                        <p><strong>Kasir:</strong>{{ $penjualan->pengguna->Username }}</p>
+                        <p><strong>Kasir:</strong>{{ $penjualan->pengguna->name }}</p>
                         <p><strong>Pembeli:</strong>{{ $penjualan->pelanggan->NamaPelanggan }}</p>
                     </div>
                 </div>

@@ -37,6 +37,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/login')->with('notif', 'logout berhasil');
+        return redirect(route('login'))->with('notif', 'logout berhasil');
     }
 }

@@ -11,14 +11,14 @@
     <div class="container mt-5">
         <h3>Aplikasi Kasir</h3>
         <div class="alert alert-info">
-            selamat datang <b>ahay</b> sebagai <b>admin</b>
+            selamat datang <b>{{ Auth::user()->name }}</b> sebagai <b>{{ Auth::user()->peran }}</b>
         </div>
 
         <a href="/pengguna" class="btn btn-warning">pengguna</a>
         <a href="/pelanggan" class="btn btn-warning">pelanggan</a>
         <a href="/produk" class="btn btn-warning">produk</a>
         <a href="/penjualan" class="btn btn-warning">penjualan</a>
-        <form action="/logout" method="POST" style="display: inline">
+        <form action="/logout" method="POST" class="d-inline">
             @csrf
             <button type="submit" class="btn btn-danger">logout</button>
         </form>
@@ -34,5 +34,7 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('javascript/javascript.js') }}"></script>
 </body>
 </html>

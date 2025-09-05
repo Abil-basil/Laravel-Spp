@@ -38,6 +38,12 @@ class DatabaseSeeder extends Seeder
             'Stok' => 100
         ]);
 
+        Produk::create([
+            'NamaProduk' => 'teh pucuk',
+            'Harga' => 4000,
+            'Stok' => 100
+        ]);
+
         Penjualan::create([
             'TanggalPenjualan' => now(),
             'TotalHarga' => 20000,
@@ -48,8 +54,15 @@ class DatabaseSeeder extends Seeder
         DetailPenjualan::create([
             'PenjualanID' => 1,
             'ProdukID' => 1,
-            'JumlahProduk' => 10,
-            'Subtotal' => 20000
+            'JumlahProduk' => 3,
+            'Subtotal' => 6000
+        ]);
+
+        DetailPenjualan::create([
+            'PenjualanID' => 1,
+            'ProdukID' => 2,
+            'JumlahProduk' => 3,
+            'Subtotal' => 12000
         ]);
 
         // Penjualan::factory(10)->recycle(Pelanggan::factory(5)->create())->create();

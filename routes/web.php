@@ -40,3 +40,5 @@ Route::delete('/produk/{produk}/hapus', [ProdukController::class, 'delete']);
 Route::get('/penjualan', [PenjualanController::class, 'index'])->middleware('auth');
 Route::get('/detail-penjualan/{penjualan}', [PenjualanController::class, 'detailPenjualan'])->middleware('auth');
 Route::get('/penjualan/download-pdf', [PenjualanController::class, 'pdf'])->middleware('auth');
+Route::get('/tambah-penjualan', [PenjualanController::class, 'create'])->middleware('auth');
+Route::post('/penjualan', [PenjualanController::class, 'store']);
