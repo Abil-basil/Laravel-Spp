@@ -9,12 +9,14 @@ use App\Models\Produk;
 use Mpdf\Mpdf;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PenjualanController extends Controller
 {
     public function index()
     {
-        return view('/penjualan', ['title' => 'penjualan', 'data' => Penjualan::all()]);
+        // latest untuk meng urutkan dari yan terbaru
+        return view('/penjualan', ['title' => 'penjualan', 'data' => Penjualan::latest()->get()]);
     }
 
     public function detailPenjualan(Penjualan $penjualan)
@@ -40,25 +42,27 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
-            'penggunaId' => ['required'],
             'pelangganId' => ['required'],
             'produkId' => ['required'],
             'jumlah' => ['required']
         ]);
 
+        
         // value untuk langsung mengambil value nya
         // get() -> untuk mengambil banyak data
         // first() -> untuk mengambil satu baris pertama
         // value('colomn) -> untuk mengambil colomn nya saja
         $produk = Produk::where('id', $request->produkId)->first();
+        dd($produk);
         
         if ($request->jumlah <= $produk->Stok)
         {
             $penjualan = Penjualan::create([
                 'TanggalPenjualan' => now(),
                 'TotalHarga' => $request->jumlah * $produk->Harga,
-                'PenggunaID' => $request->penggunaId,
+                'PenggunaID' => Auth::user()->id,
                 'PelangganID' => $request->pelangganId
             ]);
     

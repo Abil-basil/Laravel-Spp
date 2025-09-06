@@ -10,7 +10,7 @@
     @endif
 
     <div class="card-body">
-        <form action="/penjualan" method="post">
+        <form action="/penjualan" method="POST" id="form-input">
             @csrf
             <div class="row mb-3">
                 <div class="col-md-6">
@@ -43,16 +43,20 @@
                     <input type="number" class="form-control" name="jumlah" placeholder="Masukan Jumlah" required>
                 </div>
             </div>
-            <div class="row mb-3">
-                <button type="submit" class="btn btn-success">tambah item</button>
-            </div>
+                <button type="submit" class="btn btn-success add-list">tambah item</button>
         </form>
     </div>
     <div class="card-body">
-        <table class="table table-stripped table-sm">
-            <tr class="text-center">
-                <th colspan="6">List Item</th>
-            </tr>
-        </table>
+        <form action="/penjualan" method="POST">
+            @csrf
+            <table class="table table-stripped table-sm">
+                <tr class="text-center">
+                    <th colspan="6">List Item</th>
+                </tr>
+            </table>
+            <div class="row mb-3">
+                <button type="submit" class="btn btn-success">kirim</button>
+            </div>
+        </form>
     </div>
 </x-layout>
