@@ -42,3 +42,4 @@ Route::get('/detail-penjualan/{penjualan}', [PenjualanController::class, 'detail
 Route::get('/penjualan/download-pdf', [PenjualanController::class, 'pdf'])->middleware('auth');
 Route::get('/tambah-penjualan', [PenjualanController::class, 'create'])->middleware('auth');
 Route::post('/penjualan', [PenjualanController::class, 'store']);
+Route::delete('/penjualan/{penjualan}/hapus', [PenjualanController::class, 'destroy'])->middleware('auth');

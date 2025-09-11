@@ -10,6 +10,7 @@ use Mpdf\Mpdf;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PenjualanController extends Controller
 {
@@ -42,45 +43,96 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
         $request->validate([
             'pelangganId' => ['required'],
-            'produkId' => ['required'],
-            'jumlah' => ['required']
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.produkId' => ['required', 'exists:produks,id'],
+            'items.*.jumlah' => ['required', 'numeric', 'min:1']
         ]);
 
-        
-        // value untuk langsung mengambil value nya
-        // get() -> untuk mengambil banyak data
-        // first() -> untuk mengambil satu baris pertama
-        // value('colomn) -> untuk mengambil colomn nya saja
-        $produk = Produk::where('id', $request->produkId)->first();
-        dd($produk);
-        
-        if ($request->jumlah <= $produk->Stok)
-        {
+        try {
+            DB::beginTransaction();
+
+            $totalHarga = 0;
+            $items = [];
+
+            // Validasi stok dan hitung total harga
+            foreach ($request->items as $item) {
+                $produk = Produk::where('id', $item['produkId'])->first();
+                
+                if (!$produk) {
+                    return back()->with('warning', 'Produk tidak ditemukan');
+                }
+                
+                if ($item['jumlah'] > $produk->Stok) {
+                    return back()->with('warning', 'Stok ' . $produk->NamaProduk . ' tidak mencukupi. Stok tersedia: ' . $produk->Stok);
+                }
+
+                $subtotal = $item['jumlah'] * $produk->Harga;
+                $totalHarga += $subtotal;
+
+                $items[] = [
+                    'produk' => $produk,
+                    'jumlah' => $item['jumlah'],
+                    'subtotal' => $subtotal
+                ];
+            }
+
+            // Buat penjualan
             $penjualan = Penjualan::create([
-                'TanggalPenjualan' => now(),
-                'TotalHarga' => $request->jumlah * $produk->Harga,
+                'TanggalPenjualan' => now()->format('Y-m-d H:i:s'),
+                'TotalHarga' => $totalHarga,
                 'PenggunaID' => Auth::user()->id,
                 'PelangganID' => $request->pelangganId
             ]);
-    
-            DetailPenjualan::create([
-                'PenjualanID' => $penjualan->id,
-                'ProdukID' => $request->produkId,
-                'JumlahProduk' => $request->jumlah,
-                'Subtotal' => $penjualan->TotalHarga
-            ]);
 
-            $produk->update([
-                'Stok' => $produk->Stok - $request->jumlah,
-            ]);
-    
-            return redirect('penjualan')->with('notif', 'tambah penjualan berhasil');
+            // Buat detail penjualan dan update stok
+            foreach ($items as $item) {
+                DetailPenjualan::create([
+                    'PenjualanID' => $penjualan->id,
+                    'ProdukID' => $item['produk']->id,
+                    'JumlahProduk' => $item['jumlah'],
+                    'Subtotal' => $item['subtotal']
+                ]);
+
+                // Update stok produk
+                $item['produk']->update([
+                    'Stok' => $item['produk']->Stok - $item['jumlah']
+                ]);
+            }
+
+            DB::commit();
+            return redirect('penjualan')->with('notif', 'Penjualan berhasil ditambahkan');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
         }
+    }
 
-        return back()->with('warning', 'stok tidak mencukupi');
+    public function destroy(Penjualan $penjualan)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Kembalikan stok produk sebelum menghapus
+            foreach ($penjualan->detailPenjualan as $detail) {
+                $produk = $detail->produk;
+                $produk->update([
+                    'Stok' => $produk->Stok + $detail->JumlahProduk
+                ]);
+            }
+
+            // Hapus penjualan (detail akan terhapus otomatis karena cascade)
+            $penjualan->delete();
+
+            DB::commit();
+            return redirect('penjualan')->with('notif', 'Penjualan berhasil dihapus');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->with('warning', 'Gagal menghapus penjualan: ' . $e->getMessage());
+        }
     }
 
     public function pdf()
@@ -89,6 +141,5 @@ class PenjualanController extends Controller
         $dompdf->loadHtml(view('/penjualan-pdf', ['title' => 'penjualan', 'data' => Penjualan::all()]));
         $dompdf->render();
         $dompdf->stream('penjualan.pdf', array('Attachment' => false));
-
     }
 }
