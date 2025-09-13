@@ -43,15 +43,23 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->items);
         $request->validate([
             'pelangganId' => ['required'],
             'items' => ['required', 'array', 'min:1'],
-            'items.*.produkId' => ['required', 'exists:produks,id'],
+            'items.*.produkId' => ['required', 'exists:produks,id'], //exists:produks,id = dari tabel produk field id
             'items.*.jumlah' => ['required', 'numeric', 'min:1']
         ]);
+        // items.* = setiap elemen di dalam items
+        // items.*.produkId = setiap elemen di dalam items, produkId nya harus ada di tabel produk field id
 
+        // try = coba -> coba jalankan code ini jika ada code yang gagal/error maka batalkan semua code dan alihkan ke catch
+        // code yang berpotensi error
+        // try catch di gunakan untuk menangani error dengan rapih
         try {
-            DB::beginTransaction();
+            // untuk memulai proses penyimpanan (mirip session_start)
+            DB::beginTransaction(); // dipakai untuk melakukan beberapa query sekaligus dan harus di pastikan semuanya berhasil
+            // ini di gunakan karna melakukan looping ke database dan memasukan banyak data 
 
             $totalHarga = 0;
             $items = [];
@@ -60,23 +68,26 @@ class PenjualanController extends Controller
             foreach ($request->items as $item) {
                 $produk = Produk::where('id', $item['produkId'])->first();
                 
+                // pengecekan barang
                 if (!$produk) {
                     return back()->with('warning', 'Produk tidak ditemukan');
                 }
                 
+                // pengecekan stok
                 if ($item['jumlah'] > $produk->Stok) {
                     return back()->with('warning', 'Stok ' . $produk->NamaProduk . ' tidak mencukupi. Stok tersedia: ' . $produk->Stok);
                 }
 
-                $subtotal = $item['jumlah'] * $produk->Harga;
-                $totalHarga += $subtotal;
+                $subtotal = $item['jumlah'] * $produk->Harga; 
+                $totalHarga += $subtotal; // total harga akan menyimpan harga sebelumnya di mauskan ke variable di atas
 
                 $items[] = [
-                    'produk' => $produk,
+                    'produk' => $produk, // ini berisi object dari database produk
                     'jumlah' => $item['jumlah'],
                     'subtotal' => $subtotal
                 ];
             }
+            dd($items);
 
             // Buat penjualan
             $penjualan = Penjualan::create([
@@ -88,9 +99,10 @@ class PenjualanController extends Controller
 
             // Buat detail penjualan dan update stok
             foreach ($items as $item) {
+                // $item['produk'] akan berisi satu object produk dari database
                 DetailPenjualan::create([
                     'PenjualanID' => $penjualan->id,
-                    'ProdukID' => $item['produk']->id,
+                    'ProdukID' => $item['produk']->id, // (->) di gunakan untuk mengakses object
                     'JumlahProduk' => $item['jumlah'],
                     'Subtotal' => $item['subtotal']
                 ]);
@@ -101,10 +113,12 @@ class PenjualanController extends Controller
                 ]);
             }
 
+            // kalai code nya berhasil simpan permanen ke database
             DB::commit();
             return redirect('penjualan')->with('notif', 'Penjualan berhasil ditambahkan');
 
-        } catch (\Exception $e) {
+        } catch (\Exception $e) { // catch akan jalan ketika try ada yang error
+            // jika DB::beginTransaction ada yang error batalkan semua perubahan
             DB::rollback();
             return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
         }
