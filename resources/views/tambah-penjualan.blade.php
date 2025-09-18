@@ -10,7 +10,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="/penjualan" method="POST" id="form-penjualan">
+            <form action="/penjualan" method="POST" id="form-penjualan"> {{-- form-penjualan --}}
                 @csrf
                 
                 <!-- Header Informasi -->
@@ -18,7 +18,6 @@
                     <div class="col-md-6">
                         <label for="kasir" class="form-label">Kasir</label>
                         <input type="text" class="form-control" value="{{ Auth::user()->name }}" readonly>
-                        <input type="hidden" name="penggunaId" value="{{ Auth::user()->id }}">
                     </div>
                     <div class="col-md-6">
                         <label for="pembeli" class="form-label">Pembeli <span class="text-danger">*</span></label>
@@ -54,6 +53,7 @@
                                 <input type="number" class="form-control" id="jumlah" min="1" placeholder="Masukan Jumlah">
                             </div>
                             <div class="col-md-2 d-flex align-items-end">
+                                {{-- button ini tidak mengirimkan form karena type button bukan submit" --}}
                                 <button type="button" class="btn btn-primary w-100" onclick="tambahItem()">Tambah</button>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h6 class="mb-0">Daftar Item</h6>
-                        <span id="total-items" class="badge bg-primary">0 Item</span>
+                        <span id="total-items" class="badge bg-primary">0 Item</span> {{-- total-items --}}
                     </div>
                     <div class="card-body">
                         <table class="table table-striped" id="table-items">
@@ -78,8 +78,8 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody id="items-container">
-                                <tr id="empty-row">
+                            <tbody id="items-container"> {{-- items-container --}}
+                                <tr id="empty-row"> {{-- empty-row --}}
                                     <td colspan="6" class="text-center text-muted">Belum ada item ditambahkan</td>
                                 </tr>
                             </tbody>
@@ -91,7 +91,7 @@
                                 <div class="card bg-light">
                                     <div class="card-body">
                                         <h6 class="mb-2">Total Pembayaran:</h6>
-                                        <h4 class="text-primary mb-0" id="total-harga">Rp 0</h4>
+                                        <h4 class="text-primary mb-0" id="total-harga">Rp 0</h4> {{-- total-harga --}}
                                     </div>
                                 </div>
                             </div>
@@ -108,39 +108,57 @@
         </div>
     </div>
 
+    {{-- akan menyimpan data data nya di memori terlebih dahulu kecuali halaman di refresh--}}
     <script>
+        // menyimpan data sebelum nya di simpan
         let items = [];
         let itemCounter = 0;
 
         function tambahItem() {
+            // select produk dan jumlah
             const produkSelect = document.getElementById('produk');
             const jumlahInput = document.getElementById('jumlah');
             
+            // mengambil value/isi yang di input kan produk dan jumlah
             const produkId = produkSelect.value;
             const jumlah = parseInt(jumlahInput.value);
             
+            // pengecekan jika produk tidak ada
             if (!produkId) {
                 alert('Pilih produk terlebih dahulu!');
                 return;
             }
             
+            // pengecekan jika jumlah tidak ada atau kurang dari 1
             if (!jumlah || jumlah < 1) {
                 alert('Masukan jumlah yang valid!');
                 return;
             }
 
+            // mengambil data select option dari produk
+            // mengambil atribut custom yang isinya nama, harga dan stok
             const selectedOption = produkSelect.selectedOptions[0];
             const nama = selectedOption.getAttribute('data-nama');
             const harga = parseInt(selectedOption.getAttribute('data-harga'));
             const stok = parseInt(selectedOption.getAttribute('data-stok'));
 
+            // findIndex() = untuk mencari data yang sesuai dengan kondisi dari suatu array, jika ada yang sesuai maka akan mengembalikan
+            // index array yang sesuai dengan data, jika tidak maka akan mengembalikan -1
+            
+            // contoh : 
+            // const angka = [10, 20, 30, 40, 50];
+            // const index = angka.findIndex(num => num === 30);
+            // console.log(index); // 2
+
             // Cek apakah produk sudah ada
             const existingItemIndex = items.findIndex(item => item.produkId === produkId);
             
+            // jika items ada isinya atau bukan bernilai -1
             if (existingItemIndex !== -1) {
                 // Update jumlah jika produk sudah ada
                 const totalJumlah = items[existingItemIndex].jumlah + jumlah;
                 
+                // cek apakah stok mencukupi? jika jumlah lebih banyak dari stok
                 if (totalJumlah > stok) {
                     alert(`Stok tidak mencukupi! Stok tersedia: ${stok}, Total yang diminta: ${totalJumlah}`);
                     return;
@@ -157,7 +175,8 @@
                 }
                 
                 // Tambah item baru
-                items.push({
+                // items.push({}) akan menambahkan data seperti array assoc di js namanya objek
+                items.push({ 
                     id: ++itemCounter,
                     produkId: produkId,
                     nama: nama,
@@ -175,7 +194,20 @@
         }
 
         function hapusItem(itemId) {
+            // untuk memfilter array
+            // .filter() = method array yang membuat array baru berisi hanya elemen yang lolos kondisi.
+            // Kondisi di sini: item.id !== itemId → artinya ambil semua item yang id-nya tidak sama dengan itemId.
+            // Hasilnya: array baru tanpa item yang mau dihapus.
+
+            // items = items.filter(item => item.id !== 2)
+            // maka ini akan berisi array yang lolos kondisi seperti 1,3,4,5
+
+            // items = items.filter(item => item.id === 2)
+            // maka ini akan berisi array yang lolos kondisi hanya id yang sama dengan 2
+
             items = items.filter(item => item.id !== itemId);
+
+
             updateTable();
         }
 
@@ -189,13 +221,14 @@
             // Clear container
             container.innerHTML = '';
 
-            if (items.length === 0) {
-                container.appendChild(emptyRow);
-                totalItems.textContent = '0 Item';
-                totalHarga.textContent = 'Rp 0';
-                btnSubmit.disabled = true;
-                return;
-            }
+            // jika items kosong atau tidak ada isinya
+            // if (items.length === 0) {
+            //     container.appendChild(emptyRow);
+            //     totalItems.textContent = '0 Item';
+            //     totalHarga.textContent = 'Rp 0';
+            //     btnSubmit.disabled = true;
+            //     return;
+            // }
 
             let total = 0;
             items.forEach((item, index) => {

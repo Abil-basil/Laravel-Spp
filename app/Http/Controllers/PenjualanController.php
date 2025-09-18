@@ -43,7 +43,7 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->items);
+        dd($request);
         $request->validate([
             'pelangganId' => ['required'],
             'items' => ['required', 'array', 'min:1'],
@@ -87,7 +87,7 @@ class PenjualanController extends Controller
                     'subtotal' => $subtotal
                 ];
             }
-            dd($items);
+            // dd($items);
 
             // Buat penjualan
             $penjualan = Penjualan::create([
