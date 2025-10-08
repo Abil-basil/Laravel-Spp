@@ -23,7 +23,7 @@ class LoginController extends Controller
         {
             $request->session()->regenerate();
 
-            return redirect()->intended('/pengguna');
+            return redirect()->intended('/produk');
         };
 
         return back()->with('error', 'Login Gagal!!');

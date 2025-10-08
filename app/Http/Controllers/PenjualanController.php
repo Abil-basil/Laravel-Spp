@@ -14,10 +14,17 @@ use Illuminate\Support\Facades\DB;
 
 class PenjualanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // latest untuk meng urutkan dari yan terbaru
-        return view('/penjualan', ['title' => 'penjualan', 'data' => Penjualan::latest()->get()]);
+        $title = 'Penjualan';
+        $data = Penjualan::all();
+
+        if ($request->get('sort')) {
+            $sort = $request->get('sort');
+            $data = Penjualan::orderBy('created_at', $sort)->get();
+        }
+
+        return view('/penjualan', compact('title', 'data'));
     }
 
     public function detailPenjualan(Penjualan $penjualan)
@@ -43,7 +50,8 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
+
+        // dd($request);
         $request->validate([
             'pelangganId' => ['required'],
             'items' => ['required', 'array', 'min:1'],
@@ -126,11 +134,13 @@ class PenjualanController extends Controller
 
     public function destroy(Penjualan $penjualan)
     {
+        dd($penjualan->detailPenjualan); // isinya sesuai barang yang di masukan
         try {
             DB::beginTransaction();
 
             // Kembalikan stok produk sebelum menghapus
             foreach ($penjualan->detailPenjualan as $detail) {
+                // dd($detail);
                 $produk = $detail->produk;
                 $produk->update([
                     'Stok' => $produk->Stok + $detail->JumlahProduk

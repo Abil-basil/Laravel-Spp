@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             'peran' => 'admin'
         ]);
 
+        User::factory(4)->create();
+
         Pelanggan::create([
             'NamaPelanggan' => 'bagogo',
             'Alamat' => 'sukabumi',

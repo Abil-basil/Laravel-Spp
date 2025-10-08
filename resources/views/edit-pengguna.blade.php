@@ -1,6 +1,13 @@
 <x:layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
+    @if (session()->has('warning'))
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ session('warning') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+        </div>
+    @endif
+
     <form action="/pengguna/{{ $data->id }}" method="POST">
         @csrf @method('PUT')
         <div class="form-group mb-3">
@@ -18,8 +25,8 @@
             @enderror
         </div>
         <div class="form-group mb-3">
-            <label for="pw">Password</label>
-            <input type="password" class="form-control" name="password" required placeholder="Masukan Kemabli Password">
+            <label for="pw">Password (kosongkan jika ingin password tetap)</label>
+            <input type="password" class="form-control" name="password"  placeholder="Masukan Password Baru">
             @error('password')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror

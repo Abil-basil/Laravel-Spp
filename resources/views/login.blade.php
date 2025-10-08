@@ -32,9 +32,8 @@
             @enderror
         </div>
         <div class="from-group mb-2">
-            <button type="submit" class="btn btn-primary">LOGIN</button>
+            <button type="submit" class="btn btn-success col-md-12">LOGIN</button>
         </div>
     </form>
-    <a href="register" class="text-decoration-none">belum punya akun?</a>
 
 </x-layout-login>

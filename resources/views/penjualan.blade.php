@@ -16,7 +16,17 @@
     @endif
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="/tambah-penjualan" class="btn btn-warning">Tambah Penjualan</a>
+        <div class="d-flex">
+            <a href="/tambah-penjualan" class="btn btn-warning">Tambah Penjualan</a>
+            <form class="d-flex">
+                <select name="sort" class="form-control bg-secondary text-white">
+                    <option value="">Pilih Berdasarkan</option>
+                    <option value="desc">Terbaru</option>
+                    <option value="asc">Terlama</option>
+                </select>
+                <button type="submit" class="btn btn-secondary">Urutkan</button>
+            </form>
+        </div>
         <a href="/penjualan/download-pdf" class="btn btn-info">Download PDF</a>
     </div>
 
@@ -37,7 +47,10 @@
                     @forelse ($data as $isi)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ \Carbon\Carbon::parse($isi->TanggalPenjualan)->format('d/m/Y H:i') }}</td>
+                            <td>
+                                {{ \Carbon\Carbon::parse($isi->TanggalPenjualan)->format('d/m/Y H:i') }} |
+                                {{ $isi->created_at->diffForHumans() }}
+                            </td>
                             <td>Rp {{ number_format($isi->TotalHarga, 0, ',', '.') }}</td>
                             <td>{{ $isi->Pengguna->name }}</td>
                             <td>{{ $isi->Pelanggan->NamaPelanggan }}</td>

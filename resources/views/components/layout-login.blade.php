@@ -12,8 +12,8 @@
     <div class="container mt-5">
         <div class="row justify-content-md-center">
             <div class="col-md-4">
-                <h4 class="text-center">{{ $title }}</h4>
                 <div class="card">
+                    <h4 class="text-center card-header">{{ $title }}</h4>
                     <div class="card-body">
                         {{ $slot }}
                     </div>

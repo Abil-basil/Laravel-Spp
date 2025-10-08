@@ -13,13 +13,17 @@
         <div class="alert alert-info">
             selamat datang <b>{{ Auth::user()->name }}</b> sebagai <b>{{ Auth::user()->peran }}</b>
         </div>
-
-        <a href="/pengguna" class="btn btn-warning">pengguna</a>
-        <a href="/pelanggan" class="btn btn-warning">pelanggan</a>
-        <a href="/produk" class="btn btn-warning">produk</a>
-        <a href="/penjualan" class="btn btn-warning">penjualan</a>
+        @if (Auth::user()->peran == 'petugas')
+            <a href="/produk" class="btn btn-warning">produk</a>
+            <a href="/penjualan" class="btn btn-warning">penjualan</a>
+        @else
+            <a href="/pengguna" class="btn btn-warning">pengguna</a>
+            <a href="/pelanggan" class="btn btn-warning">pelanggan</a>
+            <a href="/produk" class="btn btn-warning">produk</a>
+            <a href="/penjualan" class="btn btn-warning">penjualan</a>
+        @endif
         <form action="/logout" method="POST" class="d-inline">
-            @csrf
+            @csrf @method('DELETE')
             <button type="submit" class="btn btn-danger">logout</button>
         </form>
 

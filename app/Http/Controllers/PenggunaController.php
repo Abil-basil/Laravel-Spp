@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PenggunaController extends Controller
 {
@@ -22,7 +23,7 @@ class PenggunaController extends Controller
         $request->validate([
             'name' => ['required'],
             'password' => ['required', 'min:5'],
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'unique:users,email'],
             'peran' => ['required']
         ]);
 
@@ -32,7 +33,7 @@ class PenggunaController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
             'peran' => $request->peran
         ]);
 
@@ -47,16 +48,37 @@ class PenggunaController extends Controller
     public function update($id, Request $request)
     {
         $request->validate([
-            'name' => ['required'],
+            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email'],
-            'password' => ['required'],
+            'password' => ['nullable', 'min:4', 'max:100'],
             'peran' => ['required']
         ]);
+
+        $pengguna = User::findOrFail($id);
+
+        // pengecekan apakah email sudah terdaftar
+        if ($request->email !== $pengguna->email) {
+            $cekEmail = User::where('email', $request->email)->exists();
+
+            if ($cekEmail) {
+                return back()->with('warning', 'Email Sudah Terdaftar');
+            }
+        }
+
+        // cek apakah password kosong
+        if (empty($request->password)) {
+            $pengguna->update([
+                'password' => $pengguna->password
+            ]);
+        } else {
+            $pengguna->update([
+                'password' => Hash::make($request->password)
+            ]);
+        }
 
         User::WHERE('id', $id)->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
             'peran' => $request->peran
         ]);
 

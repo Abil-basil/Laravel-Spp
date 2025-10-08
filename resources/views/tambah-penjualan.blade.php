@@ -152,6 +152,7 @@
 
             // Cek apakah produk sudah ada
             const existingItemIndex = items.findIndex(item => item.produkId === produkId);
+            // jika item tidak di temukan maka akan menghasilkan -1
             
             // jika items ada isinya atau bukan bernilai -1
             if (existingItemIndex !== -1) {
